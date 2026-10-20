@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071827">
+  <title>Arjuna Rover AI — Safe Navigation Lab</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#"><span class="brand-mark">A</span><span>ARJUNA <small>ROBOTICS LAB</small></span></a><span class="live"><i></i> SIMULATION ONLY</span></header>
+  <main>
+    <section class="hero"><div><p class="eyebrow">AUTONOMOUS SYSTEMS · PROTOTYPE 01</p><h1>Rover Navigation Lab</h1><p class="intro">Explore how a small rover can plan a route, avoid hazards, and stop safely when its world changes.</p></div><div class="hero-chip"><span>01</span><div><b>SAFE-ROUTE PLANNER</b><small>Weighted pathfinding · local simulation</small></div></div></section>
+    <section class="layout">
+      <div class="panel map-panel">
+        <div class="panel-heading"><div><h2>Mission map</h2><p>Click empty tiles to place or remove a wall.</p></div><div class="map-actions"><button id="randomBtn" class="button secondary">New map</button><button id="resetBtn" class="button secondary">Reset</button></div></div>
+        <div id="grid" class="grid" role="grid" aria-label="Rover mission grid"></div>
+        <div class="legend"><span><i class="legend-dot rover-dot"></i>Rover</span><span><i class="legend-dot goal-dot"></i>Goal</span><span><i class="legend-dot wall-dot"></i>Wall</span><span><i class="legend-dot hazard-dot">!</i>Risk zone</span><span><i class="legend-dot route-dot"></i>Planned route</span></div>
+        <div class="notice"><span>!</span><p><b>Safety note</b> — This is a browser simulation, not a certified robot controller. No hardware is connected; use a physical emergency stop and real sensor validation before any build.</p></div>
+      </div>
+      <aside class="side-column">
+        <section class="panel mission-panel"><p class="eyebrow">MISSION CONTROL</p><h2>Deliver the rover</h2><p class="muted">Navigate from the launch pad to the target while minimizing travel and risk.</p><div class="controls"><button id="runBtn" class="button primary">▶ Run mission</button><button id="stepBtn" class="button secondary">Step</button></div><label class="slider-label" for="riskSlider"><span>Risk aversion</span><b id="riskValue">High</b></label><input id="riskSlider" type="range" min="1" max="9" value="7"><div class="slider-ends"><span>Faster</span><span>Safer</span></div></section>
+        <section class="panel status-panel"><div class="panel-heading compact"><h2>Rover status</h2><span id="statusPill" class="pill ready">READY</span></div><div class="metrics"><div><small>ROUTE LENGTH</small><b id="distanceMetric">—</b></div><div><small>RISK SCORE</small><b id="riskMetric">—</b></div><div><small>EST. BATTERY</small><b id="batteryMetric">100%</b></div></div><div class="route-summary"><small>PLANNER DECISION</small><p id="decisionText">Choose a route to begin.</p></div></section>
+        <section class="panel ideas-panel"><p class="eyebrow">WHAT'S INNOVATIVE HERE?</p><ul><li><b>Risk-aware routing</b><span>Penalizes uncertain zones instead of treating all open ground as equal.</span></li><li><b>Replan-on-change</b><span>Recomputes or safe-stops when a new obstacle appears in the route.</span></li><li><b>Explainable decisions</b><span>Shows the selected route and an estimated safety cost.</span></li></ul></section>
+      </aside>
+    </section>
+    <section class="bottom-note"><span>BUILD ROADMAP</span><p>Next: connect a microcontroller and distance sensor in a controlled test area. See <a href="README.md">README</a> for architecture, setup, tests, and a staged hardware plan.</p></section>
+  </main>
+  <footer>ARJUNA ROBOTICS LAB <span>Educational prototype · v0.1.0</span></footer>
+  <script src="planner.js"></script><script src="app.js"></script>
+</body>
+</html>
