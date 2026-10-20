@@ -1,0 +1,16 @@
+'use strict';
+const assert=require('node:assert/strict');
+const {planRoute}=require('../planner.js');
+const base={width:5,height:5,start:{x:0,y:0},goal:{x:4,y:4}};
+const open=planRoute(base);
+assert.equal(open.found,true);assert.equal(open.distance,8);assert.equal(open.path[0].x,0);assert.equal(open.path.at(-1).x,4);
+const blocked=planRoute({...base,walls:new Set(['1,0','0,1'])});
+assert.equal(blocked.found,false);assert.deepEqual(blocked.path,[]);
+const wallSafe=planRoute({...base,walls:new Set(['1,0','1,1','1,2','1,3'])});
+assert.equal(wallSafe.found,true);assert.ok(!wallSafe.path.some(p=>p.x===1&&p.y<4));
+const safer=planRoute({width:5,height:3,start:{x:0,y:1},goal:{x:4,y:1},hazards:new Set(['2,1']),riskWeight:8});
+assert.equal(safer.found,true);assert.equal(safer.distance,6);assert.equal(safer.riskCount,0);
+const faster=planRoute({width:5,height:3,start:{x:0,y:1},goal:{x:4,y:1},hazards:new Set(['2,1']),riskWeight:1});
+assert.equal(faster.distance,4);assert.equal(faster.riskCount,1);
+assert.throws(()=>planRoute({...base,start:{x:-1,y:0}}),/inside the map/);
+console.log('All planner tests passed (6 scenarios).');
